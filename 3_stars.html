@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>stars</title>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <div>
+        <img id="1" src="img/star.gif" />
+        <img id="2" src="img/star.gif" />
+        <img id="3" src="img/star.gif" />
+        <img id="4" src="img/star.gif" />
+        <img id="5" src="img/star.gif" />
+        <h2 id="score"></h2>
+        <h2 id="rescore"></h2>
+    </div>
+
+    <script>
+        for (var i = 1; i <= 5; i++) {
+            document.getElementById(i).addEventListener("mouseover", shine);
+            document.getElementById(i).addEventListener("mouseout", dark);
+            document.getElementById(i).addEventListener("click", shinning);
+        }
+
+        var count = 0;
+
+        function rate(i) {
+            document.getElementById("score").innerHTML = i + "顆星";
+        }
+
+        function disrate() {
+            document.getElementById("score").innerHTML = "";
+        }
+        function rescore() {
+            if (count == 0) {
+                document.getElementById("rescore").innerHTML = "再次點擊星星即可重新評分";
+            } else {
+                document.getElementById("rescore").innerHTML = "";
+}
+        }
+
+        function shine() {
+            if (count == 0) {
+                var starnum = this.id;
+                for (var i = 1; i <= starnum; i++) {
+                    document.getElementById(i).src = "img/chngstar.gif";
+                }
+                for (var i = starnum + 1; i <= 5; i++) {
+                    document.getElementById(i).src = "img/star.gif";
+                }
+                rate(starnum);
+            }
+
+        }
+
+        function dark() {
+            if (count == 0) {
+                var starnum = this.id;
+                for (var i = 1; i <= 5; i++) {
+                    document.getElementById(i).src = "img/star.gif";
+                }
+                disrate();
+            }
+        }
+        function shinning() {
+            //if (count == 0) {
+            var starnum = this.id;
+            for (var i = 1; i <= 5; i++) {
+                document.getElementById(i).src = "img/star.gif";
+            }
+            for (var i = 1; i <= starnum; i++) {
+                document.getElementById(i).src = "img/chngstar.gif";
+            }
+            rescore();
+            if (count == 0) { count++; }
+            else { count = 0; }
+
+        }
+    </script>
+</body>
+</html>

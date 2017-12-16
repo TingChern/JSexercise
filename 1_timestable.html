@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <meta charset="utf-8" />
+    <style>
+        body {
+            background-color: burlywood;
+            margin: auto;
+        }
+
+        .tab1 {
+            background-color:bisque;
+            border: 3px dashed #808080;
+            border-collapse: collapse;
+            font-family: 'Times New Roman';
+            font-size: 20pt;
+            color: brown;
+        }
+        td {
+            border: 1px dashed #808080;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        document.write("<table class=\"tab1\"><tr>");
+        for (var i = 2; i < 10; i++) {
+            document.write("<td>");
+            for (var j = 2; j < 10; j++) {
+                document.write(i + "*" + j + "=" + i * j + "<br>");
+            }
+            document.write("</td>");
+        }
+        document.write("</tr></table>");
+    </script>
+</body>
+</html>

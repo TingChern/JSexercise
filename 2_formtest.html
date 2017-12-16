@@ -1,0 +1,145 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>表單練習</title>
+    <meta charset="utf-8" />
+    <style>
+        * {
+            font-family: 微軟正黑體;
+        }
+
+        .st1 {
+            margin: 20px;
+            width: 500px;
+            border-bottom: 1px solid #E0E0E0;
+            padding-bottom: 10px;
+        }
+
+        .ip1 {
+            color: #a4a1a1;
+            font-size: 12pt;
+        }
+
+        .lab1 {
+            float: left;
+            padding-right: 5px;
+        }
+
+        .h5 {
+            margin: 0;
+            color: #a4a1a1;
+        }
+
+        .fs1 {
+            width: 500px;
+            border: 1px solid #F08080;
+            margin-bottom: 10px;
+            border-radius: 15px;
+        }
+
+        .st2 {
+            width: 450px;
+            text-align: center;
+        }
+
+        .check {
+        }
+
+        #account {
+            margin-right: 10px;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded",
+            function () {
+                document.getElementById("name").addEventListener("blur", isChineseText);
+                document.getElementById("pwd").addEventListener("blur", isPwdCorrect);
+                document.getElementById("calendar").addEventListener("blur", isDateCorrect);
+            }
+        );
+        //判斷字數再呼叫判斷中文
+        function isChineseText() {
+            var str = document.getElementById("name").value;
+            if (str.length >= 2) {
+                isChinese(str);
+            } else { document.getElementById("nameMsg").innerHTML = "<img src='img/wrong.png' class='check' height='20' />錯誤：請輸入兩個以上中文字!"; }
+        };
+        //判斷是否為中文字
+        function isChinese(str) {
+            var i = 0;
+            while (i < str.length) {
+                if (str.charCodeAt(i) < 0x4E00 || str.charCodeAt(i) > 0x9FA5) {
+                    document.getElementById("nameMsg").innerHTML = "<img src='img/wrong.png' class='check' height='20' />錯誤：請輸入中文!";
+                    break;
+                }
+                i++;
+            }
+            if (i == str.length) { document.getElementById("nameMsg").innerHTML = "<img src='img/check.png' class='check' height='20' />正確" };
+        }
+
+        function isPwdCorrect() {
+            str = document.getElementById("pwd").value.toUpperCase();
+            if (str.length >= 6) {
+                re = new RegExp("((?=.*\\W)(?=.*\\d)(?=.*[A-Z]).{6,})");
+                if (re.test(str)) {
+                    document.getElementById("pwdMsg").innerHTML = "<img src='img/check.png' class='check' height='20' />正確";
+                } else {
+                    document.getElementById("pwdMsg").innerHTML = "<img src='img/wrong.png' class='check' height='20' />錯誤：須包含英文字母、數字、特殊字元!";
+                }
+            }
+            else {
+                document.getElementById("pwdMsg").innerHTML = "<img src='img/wrong.png' class='check' height='20' />錯誤：密碼長度須6字以上!";
+            }
+        }
+        //日期
+        function isDateCorrect() {
+            var datestr = document.getElementById("calendar").value;
+            //alert(datestr);
+            var datearray = datestr.split('/');
+            year = datearray[0];
+            month = datearray[1] - 1;//0-11
+            date = datearray[2];
+            //alert(datearray);
+            //檢查年月日值是否合理
+            var date2 = new Date(year, month, date);
+            //alert(date2);
+            if (date2.getFullYear() != year || date2.getMonth() != month || date2.getDate() != date) {
+                document.getElementById("calMsg").innerHTML = "<img src='img/wrong.png' class='check' height='20' />錯誤：請輸入正確日期!";
+            } else {
+                document.getElementById("calMsg").innerHTML = "<img src='img/check.png' class='check' height='20' />正確";
+            }
+        }
+    </script>
+</head>
+<body>
+    <form action="#" method="get">
+        <fieldset class="fs1">
+            <legend>Form Check</legend>
+            <div class="st1">
+                <label class="lab1" for="name">姓名:</label>
+                <input class="ip1" type="text" id="name" name="name" placeholder="姓名" size="5" autocomplete="on" required autofocus />
+                <span id="nameMsg"></span>
+                <h5 class="h5">(1.不可空白，2.至少為兩個字以上，3.必須全部為中文字)</h5>
+            </div>
+            <div class="st1">
+                <label class="lab1" for="pwd">密碼:</label>
+                <input class="ip1" type="password" id="pwd" name="pwd" placeholder="請輸入密碼" maxlength="15" required autocomplete="on" />
+                <span id="pwdMsg"></span>
+                <h5 class="h5">(1.不可空白，2.至少有6個字且必須包含英文字母、數字、特殊字元[!@#$%^&*])</h5>
+            </div>
+            <div class="st1">
+                <label class="lab1" for="calendar">日期:</label>
+                <input class="ip1" type="text" id="calendar" name="calendar" placeholder="ex:2000/2/29" maxlength="10" required />
+                <span id="calMsg"></span>
+                <h5 class="h5">格式:西元年/月/日 yyyy/MM/dd</h5>
+            </div>
+            <div class="st2">
+                <input type="submit" value="送出" />
+                <input type="reset" value="清除" />
+            </div>
+        </fieldset>
+
+    </form>
+</body>
+</html>
